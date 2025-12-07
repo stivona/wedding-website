@@ -46,22 +46,36 @@ export default function Home() {
       {/* Welcome Message Section */}
       <section className="py-20 bg-olive/5">
         <div className="container-wedding">
-          <div className="max-w-2xl mx-auto text-center">
-            <h2 className="heading-display text-4xl md:text-5xl mb-6">
-              J<span style={{ fontFeatureSettings: '"salt", "ss01", "ss02", "swsh"' }}>O</span>IN <span style={{ fontFeatureSettings: '"salt", "ss01", "ss02", "swsh"' }}>U</span>S!
-            </h2>
-            
-            <div className="decorative-line mb-8" />
-            
-            <p className="font-body text-olive/80 text-lg leading-relaxed mb-6">
-              We are so excited to celebrate our love with the people who mean the most to us. 
-              Join us for a beautiful ceremony overlooking the Pacific Ocean, followed by an 
-              evening of dinner, dancing, and joy at a stunning farmstead.
-            </p>
-            
-            <p className="font-body text-olive/80 text-lg leading-relaxed">
-              We can&apos;t wait to share this special day with you!
-            </p>
+          <div className="max-w-5xl mx-auto">
+            <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+              {/* Image on the left */}
+              <div className="w-full md:w-1/2 flex-shrink-0">
+                <Image
+                  src="/images/proposal.jpeg"
+                  alt="Shannon and Austin at Capella by the Sea"
+                  width={600}
+                  height={750}
+                  className="w-full h-auto rounded-lg shadow-lg object-cover"
+                />
+              </div>
+              
+              {/* Text on the right, left-aligned */}
+              <div className="w-full md:w-1/2 text-left">
+                <h2 className="heading-display text-4xl md:text-5xl mb-6">
+                  J<span style={{ fontFeatureSettings: '"salt", "ss01", "ss02", "swsh"' }}>O</span>IN <span style={{ fontFeatureSettings: '"salt", "ss01", "ss02", "swsh"' }}>U</span>S!
+                </h2>
+                
+                <p className="font-body text-olive/80 text-lg leading-relaxed mb-6">
+                  We are so excited to celebrate our love with the people who mean the most to us. 
+                  Join us for a beautiful ceremony overlooking the Pacific Ocean, followed by an 
+                  evening of dinner, dancing, and joy at a stunning farmstead.
+                </p>
+                
+                <p className="font-body text-olive/80 text-lg leading-relaxed">
+                  We can&apos;t wait to share this special day with you!
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
