@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-cream text-olive font-body antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading uppercase;
+  }
+}
+
+@layer components {
+  .container-wedding {
+    @apply max-w-5xl mx-auto px-6 md:px-8;
+  }
+  
+  .heading-display {
+    @apply font-heading text-olive tracking-wide uppercase;
+  }
+  
+  .card {
+    @apply bg-white/60 backdrop-blur-sm rounded-2xl border border-olive/10 p-6 md:p-8;
+  }
+  
+  .btn-primary {
+    @apply inline-block px-6 py-3 bg-olive text-cream font-body font-medium 
+           rounded-full hover:bg-olive-600 transition-colors duration-300;
+  }
+  
+  .link-nav {
+    @apply text-olive hover:text-olive-400 transition-colors duration-200 
+           font-body text-sm uppercase tracking-widest;
+  }
+  
+  .decorative-line {
+    @apply w-24 h-px bg-olive/30 mx-auto;
+  }
+}
+
+/* Decorative ampersand styling */
+.ampersand {
+  @apply font-heading text-olive/80;
+}
+
+/* Map container */
+.map-container {
+  @apply rounded-xl overflow-hidden border border-olive/20;
+}
+
+.map-container iframe {
+  @apply w-full h-64 md:h-80;
+}
+
+/* Repeating text banner */
+.repeat-banner {
+  @apply w-full whitespace-nowrap bg-cream border-y-2 border-olive flex items-center justify-center;
+  padding-top: 8px;
+}
+
+.repeat-text {
+  @apply font-heading text-olive text-2xl md:text-3xl lg:text-4xl uppercase tracking-wide;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
