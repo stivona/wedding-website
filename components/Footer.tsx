@@ -11,7 +11,7 @@ export default function Footer() {
         </div>
         
         <p className="font-heading text-lg md:text-xl lg:text-2xl text-olive/70 uppercase tracking-[0.15em]">
-          Shann<span style={{ fontFeatureSettings: '"salt", "ss01", "ss02", "swsh"' }}>o</span>n & Austin
+          Shann<span style={{ fontFeatureSettings: '"salt", "ss01", "ss02", "swsh"' }}>o</span>n & A<span style={{ fontFeatureSettings: '"salt", "ss01", "ss02", "swsh"' }}>u</span>stin
         </p>
       </div>
     </footer>

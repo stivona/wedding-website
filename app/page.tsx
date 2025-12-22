@@ -104,38 +104,13 @@ export default function Home() {
             {/* Reception Card */}
             <div className="card text-center">
               <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
-                {/* Farm/farmstead icon - rolling hills with crops and farmhouse */}
-                <svg className="w-16 h-16 text-olive" viewBox="0 0 100 100" fill="currentColor">
-                  {/* Rolling hills */}
-                  <path d="M0 70 Q25 55 50 65 Q75 75 100 60 L100 100 L0 100 Z" fillOpacity="0.2" />
-                  {/* Farmhouse */}
-                  <path d="M55 45 L55 70 L85 70 L85 45 L70 30 Z" />
-                  <rect x="62" y="55" width="8" height="15" fill="#FAF8F5" />
-                  <rect x="75" y="50" width="6" height="8" fill="#FAF8F5" />
-                  {/* Crops/wheat stalks */}
-                  <line x1="15" y1="70" x2="15" y2="50" stroke="currentColor" strokeWidth="2" />
-                  <line x1="12" y1="55" x2="15" y2="50" stroke="currentColor" strokeWidth="1.5" />
-                  <line x1="18" y1="55" x2="15" y2="50" stroke="currentColor" strokeWidth="1.5" />
-                  <ellipse cx="15" cy="48" rx="2" ry="4" />
-                  
-                  <line x1="25" y1="68" x2="25" y2="48" stroke="currentColor" strokeWidth="2" />
-                  <line x1="22" y1="53" x2="25" y2="48" stroke="currentColor" strokeWidth="1.5" />
-                  <line x1="28" y1="53" x2="25" y2="48" stroke="currentColor" strokeWidth="1.5" />
-                  <ellipse cx="25" cy="46" rx="2" ry="4" />
-                  
-                  <line x1="35" y1="65" x2="35" y2="45" stroke="currentColor" strokeWidth="2" />
-                  <line x1="32" y1="50" x2="35" y2="45" stroke="currentColor" strokeWidth="1.5" />
-                  <line x1="38" y1="50" x2="35" y2="45" stroke="currentColor" strokeWidth="1.5" />
-                  <ellipse cx="35" cy="43" rx="2" ry="4" />
-                  
-                  <line x1="45" y1="67" x2="45" y2="47" stroke="currentColor" strokeWidth="2" />
-                  <line x1="42" y1="52" x2="45" y2="47" stroke="currentColor" strokeWidth="1.5" />
-                  <line x1="48" y1="52" x2="45" y2="47" stroke="currentColor" strokeWidth="1.5" />
-                  <ellipse cx="45" cy="45" rx="2" ry="4" />
-                  
-                  {/* Sun */}
-                  <circle cx="20" cy="25" r="8" fillOpacity="0.3" />
-                </svg>
+                <Image
+                  src="/images/Treble.svg"
+                  alt="Reception"
+                  width={80}
+                  height={80}
+                  className="object-contain"
+                />
               </div>
               <h3 className="heading-display text-2xl mb-2">RECEPTI<span style={{ fontFeatureSettings: '"salt", "ss01", "ss02", "swsh"' }}>O</span>N</h3>
               <p className="font-body text-olive/70 mb-1">Following Ceremony</p>

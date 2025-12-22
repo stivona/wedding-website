@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Schedule | Shannon & Austin",
@@ -145,10 +146,14 @@ export default function SchedulePage() {
         <div className="max-w-3xl mx-auto mt-16">
           <div className="card border-2 border-olive/30 bg-olive/5">
             <div className="flex items-start gap-4 mb-6">
-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-olive/20 flex items-center justify-center">
-                <svg className="w-6 h-6 text-olive" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                </svg>
+              <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center">
+                <Image
+                  src="/images/Attire.svg"
+                  alt="Attire"
+                  width={48}
+                  height={48}
+                  className="object-contain"
+                />
               </div>
               <div>
                 <h3 className="heading-display text-2xl md:text-3xl mb-2">ATTIRE</h3>

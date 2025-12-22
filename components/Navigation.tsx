@@ -10,8 +10,8 @@ const navItems = [
 ];
 
 const actionItems = [
-  { href: "#", label: "Registry", external: true },
-  { href: "#", label: "RSVP", external: true },
+  { href: "https://withjoy.com/shannonandaustingetmarried/registry", label: "Registry", external: true },
+  { href: "/rsvp", label: "RSVP", external: false },
 ];
 
 export default function Navigation() {
@@ -44,17 +44,27 @@ export default function Navigation() {
             
             {/* Action Buttons */}
             <div className="flex items-center gap-3">
-              {actionItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="px-4 py-2 border border-olive text-olive font-body text-sm uppercase tracking-widest rounded-full hover:bg-olive hover:text-cream transition-colors duration-200"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {item.label}
-                </a>
-              ))}
+              {actionItems.map((item) =>
+                item.external ? (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className="px-4 py-2 border border-olive text-olive font-body text-sm uppercase tracking-widest rounded-full hover:bg-olive hover:text-cream transition-colors duration-200"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className="px-4 py-2 border border-olive text-olive font-body text-sm uppercase tracking-widest rounded-full hover:bg-olive hover:text-cream transition-colors duration-200"
+                  >
+                    {item.label}
+                  </Link>
+                )
+              )}
             </div>
           </div>
 
@@ -108,18 +118,29 @@ export default function Navigation() {
             
             {/* Action Buttons - Mobile */}
             <div className="flex gap-3">
-              {actionItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="flex-1 text-center px-4 py-2 border border-olive text-olive font-body text-sm uppercase tracking-widest rounded-full hover:bg-olive hover:text-cream transition-colors duration-200"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.label}
-                </a>
-              ))}
+              {actionItems.map((item) =>
+                item.external ? (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className="flex-1 text-center px-4 py-2 border border-olive text-olive font-body text-sm uppercase tracking-widest rounded-full hover:bg-olive hover:text-cream transition-colors duration-200"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className="flex-1 text-center px-4 py-2 border border-olive text-olive font-body text-sm uppercase tracking-widest rounded-full hover:bg-olive hover:text-cream transition-colors duration-200"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                )
+              )}
             </div>
           </div>
         )}

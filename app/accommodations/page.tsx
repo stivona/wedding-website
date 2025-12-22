@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Accommodations | Shannon & Austin",
@@ -34,25 +35,26 @@ const hotels = [
     address: "16008 Boat Basin Rd, Brookings, OR 97415",
   },
   {
-    name: "Ocean Suites Motel",
-    location: "Brookings, OR",
-    description: "Comfortable accommodations near the harbor with ocean views.",
-    phone: "(541) 469-4004",
-    address: "16045 Lower Harbor Rd, Brookings, OR 97415",
+    name: "Local Airbnbs",
+    location: "Crescent City, CA",
+    description: "Browse vacation rentals and unique stays in the area. Great for groups or families looking for more space!",
+    website: "https://www.airbnb.com/s/Crescent-City--CA/homes?adults=1&refinement_paths%5B%5D=%2Fhomes&place_id=ChIJ24hiXDdm0FQRLuZ1c7Ca6HY&location=Crescent+City%2C+CA&checkin=2026-08-07&checkout=2026-08-09&date_picker_type=calendar",
+    address: "Various locations in Crescent City",
   },
   {
-    name: "Oceanview Inn",
-    location: "Crescent City, CA",
-    description: "Spacious rooms with beautiful ocean views, close to the reception venue.",
-    phone: "(707) 465-1111",
-    address: "270 US-101, Crescent City, CA 95531",
+    name: "Wildflower Inn",
+    location: "Gold Beach, OR",
+    description: "A charming boutique bed & breakfast with botanical spa and beautiful gardens. Note: Located ~30 miles north of Brookings (about 1 hour from reception venue).",
+    phone: "(541) 425-7887",
+    address: "29401 Ellensburg Ave, Gold Beach, OR 97444",
   },
   {
-    name: "Lighthouse Inn",
+    name: "Camping at the Farm",
     location: "Crescent City, CA",
-    description: "Known for proximity to local attractions and comfortable amenities.",
-    phone: "(707) 464-3993",
-    address: "681 US-101, Crescent City, CA 95531",
+    description: "Want a more rustic experience? Bring your tent or camper and stay right where the celebration is happening!",
+    mailto: "shannonandaustingetmarried@gmail.com",
+    address: "Ossia Farm, 2465 Morehead Rd, Crescent City, CA",
+    isCamping: true,
   },
 ];
 
@@ -129,62 +131,56 @@ export default function AccommodationsPage() {
                 <address className="font-body text-olive/60 text-xs not-italic mb-2">
                   {hotel.address}
                 </address>
-                <a
-                  href={`tel:${hotel.phone.replace(/[^\d]/g, "")}`}
-                  className="font-body text-olive hover:text-olive-400 transition-colors text-sm inline-flex items-center gap-2"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                  {hotel.phone}
-                </a>
+                {hotel.phone ? (
+                  <a
+                    href={`tel:${hotel.phone.replace(/[^\d]/g, "")}`}
+                    className="font-body text-olive hover:text-olive-400 transition-colors text-sm inline-flex items-center gap-2"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                    {hotel.phone}
+                  </a>
+                ) : hotel.website ? (
+                  <a
+                    href={hotel.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-body text-olive hover:text-olive-400 transition-colors text-sm inline-flex items-center gap-2"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                    Browse Listings
+                  </a>
+                ) : hotel.mailto ? (
+                  <a
+                    href={`mailto:${hotel.mailto}?subject=Camping%20Reservation`}
+                    className="font-body text-olive hover:text-olive-400 transition-colors text-sm inline-flex items-center gap-2"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    Reserve a Spot
+                  </a>
+                ) : null}
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Camping Option */}
-        <div className="max-w-3xl mx-auto">
-          <div className="card bg-olive/5 text-center">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-olive/10 flex items-center justify-center">
-              <svg className="w-8 h-8 text-olive" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
-              </svg>
-            </div>
-            
-            <h2 className="heading-display text-3xl mb-4">
-              CAMPING AT THE FARM
-            </h2>
-            
-            <div className="decorative-line mb-6" />
-            
-            <p className="font-body text-olive/70 text-lg mb-4">
-              Want a more rustic experience? Guests are welcome to camp on the 
-              Ossia Farm property!
-            </p>
-            
-            <p className="font-body text-olive/60 text-sm mb-6">
-              Bring your tent or camper and stay right where the celebration is happening. 
-              Perfect for those who want to fully immerse in the farm atmosphere and 
-              extend the festivities.
-            </p>
-            
-            <div className="inline-block px-4 py-2 border border-olive/30 rounded-lg">
-              <p className="font-body text-olive/70 text-sm">
-                Please contact us in advance if you&apos;d like to reserve a camping spot
-              </p>
-            </div>
-          </div>
         </div>
 
         {/* Travel Note */}
         <div className="max-w-3xl mx-auto mt-12">
           <div className="card border-2 border-olive/30 bg-olive/5">
             <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-olive/20 flex items-center justify-center">
-                <svg className="w-6 h-6 text-olive" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                </svg>
+              <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center">
+                <Image
+                  src="/images/Plane.svg"
+                  alt="Airplane"
+                  width={48}
+                  height={48}
+                  className="object-contain"
+                />
               </div>
               <div>
                 <h3 className="heading-display text-xl mb-2">GETTING HERE</h3>
