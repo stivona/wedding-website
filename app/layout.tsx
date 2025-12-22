@@ -8,12 +8,12 @@ import Footer from "@/components/Footer";
 const paradiseSeashore = localFont({
   src: [
     {
-      path: "./fonts/paradise-seashore-regular.otf",
+      path: "../public/fonts/paradise-seashore-regular.otf",
       weight: "400",
       style: "normal",
     },
     {
-      path: "./fonts/paradise-seashore-italic.otf",
+      path: "../public/fonts/paradise-seashore-italic.otf",
       weight: "400",
       style: "italic",
     },
