@@ -9,7 +9,7 @@ export default function RSVPPage() {
     <div className="py-16 md:py-24">
       <div className="container-wedding">
         {/* Header */}
-        <div className="text-center mb-4">
+        <div className="text-center mb-2">
           <h1 className="heading-display text-5xl md:text-6xl lg:text-7xl mb-4">
             RSVP
           </h1>
@@ -20,7 +20,7 @@ export default function RSVPPage() {
         </div>
 
         {/* Envelope Container */}
-        <div className={`max-w-4xl mx-auto flex flex-col items-center transition-all duration-700 ${isOpen ? 'pb-[400px]' : ''}`}>
+        <div className={`max-w-4xl mx-auto flex flex-col items-center transition-all duration-700 -mt-40 ${isOpen ? 'pb-[400px]' : ''}`}>
           <div className={`envelope-container ${isOpen ? "opened" : ""}`}>
             {/* Envelope Back */}
             <div className="envelope-back" />
@@ -78,11 +78,11 @@ export default function RSVPPage() {
           height: 500px;
           perspective: 1500px;
           margin: 0 auto;
-          transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.6s;
+          transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.4s;
         }
 
         .envelope-container.opened {
-          transform: translateY(340px);
+          transform: translateY(350px);
         }
 
         .envelope-back {
@@ -108,7 +108,7 @@ export default function RSVPPage() {
           border-radius: 0 0 8px 8px;
           clip-path: polygon(0 40%, 50% 0, 100% 40%, 100% 100%, 0 100%);
           z-index: 3;
-          transition: opacity 0.5s ease 0.3s;
+          transition: opacity 0.4s ease 0.2s;
         }
 
         .envelope-container.opened .envelope-front {
@@ -125,7 +125,7 @@ export default function RSVPPage() {
           height: 200px;
           transform-origin: top center;
           transform: translateX(-50%) rotateX(0deg);
-          transition: transform 0.6s ease-in-out;
+          transition: transform 0.6s ease-in-out 0s;
           z-index: 4;
           transform-style: preserve-3d;
         }
@@ -153,15 +153,15 @@ export default function RSVPPage() {
           border-radius: 8px;
           box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
           z-index: 2;
-          transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s,
-                      opacity 0.3s ease 0.3s;
+          transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s,
+                      opacity 0.3s ease 0.5s;
           overflow: hidden;
           opacity: 0;
           pointer-events: none;
         }
 
         .envelope-container.opened .envelope-letter {
-          transform: translateX(-50%) translateY(-280px);
+          transform: translateX(-50%) translateY(-420px);
           opacity: 1;
           pointer-events: auto;
         }
@@ -282,7 +282,7 @@ export default function RSVPPage() {
           }
 
           .envelope-container.opened .envelope-letter {
-            transform: translateX(-50%) translateY(-220px);
+            transform: translateX(-50%) translateY(-340px);
           }
 
           .wax-seal {
