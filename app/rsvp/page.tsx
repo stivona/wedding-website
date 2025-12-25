@@ -20,7 +20,7 @@ export default function RSVPPage() {
         </div>
 
         {/* Envelope Container */}
-        <div className={`max-w-4xl mx-auto flex flex-col items-center transition-all duration-700 -mt-40 ${isOpen ? 'pb-[400px]' : ''}`}>
+        <div className={`max-w-4xl mx-auto flex flex-col items-center transition-all duration-700 -mt-40 ${isOpen ? 'pb-[500px]' : ''}`}>
           <div className={`envelope-container ${isOpen ? "opened" : ""}`}>
             {/* Envelope Back */}
             <div className="envelope-back" />
@@ -29,7 +29,7 @@ export default function RSVPPage() {
             <div className="envelope-letter">
               <div className="letter-content">
                 <iframe
-                  src="https://ribbon-month-841.notion.site/ebd//16b12864049481b5b1d9dfe127d5b2f6"
+                  src="https://ribbon-month-841.notion.site/ebd//16b12864049481b5b1d9dfe127d5b2f6?theme=light"
                   width="100%"
                   height="600"
                   frameBorder="0"
@@ -78,11 +78,11 @@ export default function RSVPPage() {
           height: 500px;
           perspective: 1500px;
           margin: 0 auto;
-          transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.4s;
+          transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s;
         }
 
         .envelope-container.opened {
-          transform: translateY(350px);
+          transform: translateY(450px);
         }
 
         .envelope-back {
@@ -153,15 +153,15 @@ export default function RSVPPage() {
           border-radius: 8px;
           box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
           z-index: 2;
-          transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s,
-                      opacity 0.3s ease 0.5s;
+          transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.4s,
+                      opacity 0.3s ease 1.3s;
           overflow: hidden;
           opacity: 0;
           pointer-events: none;
         }
 
         .envelope-container.opened .envelope-letter {
-          transform: translateX(-50%) translateY(-420px);
+          transform: translateX(-50%) translateY(-100px);
           opacity: 1;
           pointer-events: auto;
         }
@@ -265,7 +265,7 @@ export default function RSVPPage() {
           }
 
           .envelope-container.opened {
-            transform: translateY(280px);
+            transform: translateY(350px);
           }
 
           .envelope-back {
@@ -282,7 +282,7 @@ export default function RSVPPage() {
           }
 
           .envelope-container.opened .envelope-letter {
-            transform: translateX(-50%) translateY(-340px);
+            transform: translateX(-50%) translateY(-80px);
           }
 
           .wax-seal {

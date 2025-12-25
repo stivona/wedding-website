@@ -44,7 +44,8 @@ const hotels = [
   {
     name: "Wildflower Inn",
     location: "Gold Beach, OR",
-    description: "A charming boutique bed & breakfast with botanical spa and beautiful gardens. Note: Located ~30 miles north of Brookings (about 1 hour from reception venue).",
+    description: "A cozy inn option along the scenic Oregon coast.",
+    note: "Note: Located about an hour from the reception venue.",
     phone: "(541) 425-7887",
     address: "29401 Ellensburg Ave, Gold Beach, OR 97444",
   },
@@ -115,9 +116,17 @@ export default function AccommodationsPage() {
                 <p className="font-body text-olive/60 text-sm">{hotel.location}</p>
               </div>
               
-              <p className="font-body text-olive/70 text-sm mb-4">
+              <p className="font-body text-olive/70 text-sm mb-2">
                 {hotel.description}
               </p>
+              
+              {hotel.note && (
+                <p className="font-body text-olive/70 text-sm font-semibold mb-4">
+                  {hotel.note}
+                </p>
+              )}
+              
+              {!hotel.note && <div className="mb-2" />}
               
               {hotel.highlight && (
                 <div className="inline-block px-3 py-1 bg-olive/10 rounded-full mb-4">
