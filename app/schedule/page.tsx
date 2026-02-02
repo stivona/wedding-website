@@ -48,8 +48,7 @@ export default function SchedulePage() {
                   </address>
                   
                   <p className="font-body text-olive/60 text-sm leading-relaxed">
-                    Join us as we exchange vows in a stunning oceanfront chapel. 
-                    The ceremony will overlook the beautiful Pacific coastline.
+                    Join us for the ceremony at Capella by the Sea located in Azalea Park. There is parking onsite and a shuttle from the Beach Front Inn.
                   </p>
                   
                   <a
@@ -107,8 +106,7 @@ export default function SchedulePage() {
                   </address>
                   
                   <p className="font-body text-olive/60 text-sm leading-relaxed">
-                    Celebrate with us at this charming farmstead! Enjoy dinner, drinks, 
-                    dancing, and an unforgettable evening under the stars.
+                    Following the ceremony, take a 20 minute ride south to celebrate with us at Ossia Farm. There will be dinner, drinks, and revelry! There is onsite parking and there will be a shuttle from the ceremony.
                   </p>
                   
                   <a

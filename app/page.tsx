@@ -65,14 +65,8 @@ export default function Home() {
                   J<span style={{ fontFeatureSettings: '"salt", "ss01", "ss02", "swsh"' }}>O</span>IN <span style={{ fontFeatureSettings: '"salt", "ss01", "ss02", "swsh"' }}>U</span>S!
                 </h2>
                 
-                <p className="font-body text-olive/80 text-lg leading-relaxed mb-6">
-                  We are so excited to celebrate our love with the people who mean the most to us. 
-                  Join us for a beautiful ceremony overlooking the Pacific Ocean, followed by an 
-                  evening of dinner, dancing, and joy at a stunning farmstead.
-                </p>
-                
                 <p className="font-body text-olive/80 text-lg leading-relaxed">
-                  We can&apos;t wait to share this special day with you!
+                  We are (finally) getting married! We can&apos;t wait to celebrate with you in southern Oregon! We know it is a bit of a trek so we hope you can make a vacation out of exploring the beautiful southern Oregon coast.
                 </p>
               </div>
             </div>

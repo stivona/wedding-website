@@ -42,20 +42,20 @@ const hotels = [
     address: "Various locations in Crescent City",
   },
   {
-    name: "Wildflower Inn",
-    location: "Gold Beach, OR",
-    description: "A cozy inn option along the scenic Oregon coast.",
-    note: "Note: Located about an hour from the reception venue.",
-    phone: "(541) 425-7887",
-    address: "29401 Ellensburg Ave, Gold Beach, OR 97444",
-  },
-  {
     name: "Camping at the Farm",
     location: "Crescent City, CA",
     description: "Want a more rustic experience? Bring your tent or camper and stay right where the celebration is happening!",
     mailto: "shannonandaustingetmarried@gmail.com",
     address: "Ossia Farm, 2465 Morehead Rd, Crescent City, CA",
     isCamping: true,
+  },
+  {
+    name: "Wildflower Inn",
+    location: "Gold Beach, OR",
+    description: "A cozy inn option along the scenic Oregon coast.",
+    note: "Note: Located about an hour from the reception venue.",
+    phone: "(541) 425-7887",
+    address: "29401 Ellensburg Ave, Gold Beach, OR 97444",
   },
 ];
 
@@ -70,8 +70,7 @@ export default function AccommodationsPage() {
           </h1>
           <div className="decorative-line mb-6" />
           <p className="font-body text-olive/70 text-lg max-w-2xl mx-auto">
-            We&apos;ve gathered some accommodation options for your visit to the beautiful 
-            Southern Oregon and Northern California coast.
+            We&apos;ve gathered some accommodation options for your visit!
           </p>
         </div>
 
