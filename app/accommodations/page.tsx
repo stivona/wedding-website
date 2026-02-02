@@ -193,9 +193,7 @@ export default function AccommodationsPage() {
               <div>
                 <h3 className="heading-display text-xl mb-2">GETTING HERE</h3>
                 <p className="font-body text-olive/70 text-sm">
-                  The closest major airports are in Medford, OR (MFR) and Arcata/Eureka, CA (ACV), 
-                  both approximately 1.5-2 hours away. Rental cars are recommended for exploring 
-                  this beautiful coastal region.
+                  The closest major airport is in Medford, OR (MFR) approximately 2.5 hours away. Rental cars are recommended for exploring this beautiful coastal region.
                 </p>
               </div>
             </div>
