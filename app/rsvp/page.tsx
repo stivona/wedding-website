@@ -1,15 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function RSVPPage() {
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [formLoaded, setFormLoaded] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen) setFormLoaded(false);
+  }, [isOpen]);
 
   return (
     <div className="py-16 md:py-24">
       <div className="container-wedding">
         {/* Header */}
-        <div className="text-center mb-2">
+        <div className="text-center mb-12">
           <h1 className="heading-display text-5xl md:text-6xl lg:text-7xl mb-4">
             RSVP
           </h1>
@@ -19,58 +29,89 @@ export default function RSVPPage() {
           </p>
         </div>
 
-        {/* Envelope Container */}
-        <div className={`max-w-4xl mx-auto flex flex-col items-center transition-all duration-700 -mt-40 ${isOpen ? 'pb-[500px]' : ''}`}>
-          <div className={`envelope-container ${isOpen ? "opened" : ""}`}>
-            {/* Envelope Back */}
-            <div className="envelope-back" />
+        {/* Envelope area - inline minHeight reserves space in initial HTML so no snap when envelope loads */}
+        <div
+          className={`max-w-4xl mx-auto flex flex-col items-center -mt-40 transition-all duration-700 ${isOpen ? "pb-[500px]" : ""}`}
+          style={{ minHeight: 560 }}
+        >
+          {mounted && (
+            <div className="envelope-fade-in">
+              <div className={`envelope-container ${isOpen ? "opened" : ""}`}>
+                {/* Envelope Back */}
+                <div className="envelope-back" />
 
-            {/* Form Card (inside envelope) */}
-            <div className="envelope-letter">
-              <div className="letter-content">
-                <iframe
-                  src="https://ribbon-month-841.notion.site/ebd//16b12864049481b5b1d9dfe127d5b2f6?theme=light"
-                  width="100%"
-                  height="600"
-                  frameBorder="0"
-                  allowFullScreen
-                  title="RSVP Form"
-                  className="rounded-lg"
-                />
-              </div>
-            </div>
-
-            {/* Envelope Front */}
-            <div className="envelope-front" />
-
-            {/* Envelope Flap */}
-            <div className="envelope-flap">
-              <div className="envelope-flap-inner" />
-              {/* Wax Seal Button - inside flap so it rises with it */}
-              {!isOpen && (
-                <button
-                  onClick={() => setIsOpen(true)}
-                  className="wax-seal"
-                  aria-label="Open envelope"
-                >
-                  <div className="wax-seal-inner">
-                    <span className="wax-seal-text">RSVP</span>
+                {/* Form Card (inside envelope) - whole letter hidden until iframe has loaded */}
+                <div className={`envelope-letter ${formLoaded ? "letter-ready" : ""}`}>
+                  <div className="letter-content">
+                    {isOpen && (
+                      <iframe
+                        src="https://ribbon-month-841.notion.site/ebd//16b12864049481b5b1d9dfe127d5b2f6?theme=light&mode=light"
+                        width="100%"
+                        height="600"
+                        frameBorder="0"
+                        allowFullScreen
+                        title="RSVP Form"
+                        className="rounded-lg"
+                        onLoad={() => {
+                          requestAnimationFrame(() => {
+                            requestAnimationFrame(() => {
+                              setTimeout(() => setFormLoaded(true), 150);
+                            });
+                          });
+                        }}
+                      />
+                    )}
                   </div>
+                </div>
+
+                {/* Envelope Front */}
+                <div className="envelope-front" />
+
+                {/* Envelope Flap */}
+                <div className="envelope-flap">
+                  <div className="envelope-flap-inner" />
+                </div>
+
+                {/* Wax Seal - stays in DOM when opening so it can fade out */}
+                <button
+                  onClick={() => !isOpen && setIsOpen(true)}
+                  className={`wax-seal ${isOpen ? "wax-seal-opening" : ""}`}
+                  aria-label="Open envelope"
+                  disabled={isOpen}
+                >
+                  <img
+                    src="/images/white-seal.png"
+                    alt=""
+                    className="wax-seal-img"
+                  />
+                  <span className="wax-seal-text">RSVP</span>
                 </button>
+              </div>
+
+              {!isOpen && (
+                <p className="font-body text-olive/50 text-sm mt-6 animate-pulse">
+                  Click the seal to open
+                </p>
               )}
             </div>
-          </div>
-
-          {/* Hint text */}
-          {!isOpen && (
-            <p className="font-body text-olive/50 text-sm mt-6 animate-pulse">
-              Click the seal to open
-            </p>
           )}
         </div>
       </div>
 
       <style jsx>{`
+        .envelope-fade-in {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          animation: envelopeFadeIn 0.5s ease-out forwards;
+        }
+
+        @keyframes envelopeFadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
         .envelope-container {
           position: relative;
           width: 100%;
@@ -78,7 +119,7 @@ export default function RSVPPage() {
           height: 500px;
           perspective: 1500px;
           margin: 0 auto;
-          transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s;
+          transition: transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.35s;
         }
 
         .envelope-container.opened {
@@ -104,11 +145,11 @@ export default function RSVPPage() {
           transform: translateX(-50%);
           width: 100%;
           height: 200px;
-          background: linear-gradient(165deg, #5E7A59 0%, #3A5635 100%);
+          background: linear-gradient(165deg, #5E7A59 0%, #3A5635 55%, #2a4027 100%);
           border-radius: 0 0 8px 8px;
-          clip-path: polygon(0 40%, 50% 0, 100% 40%, 100% 100%, 0 100%);
+          clip-path: polygon(0 95%, 50% 0, 100% 95%, 100% 100%, 0 100%);
           z-index: 3;
-          transition: opacity 0.4s ease 0.2s;
+          transition: opacity 0.4s ease-out 0.1s;
         }
 
         .envelope-container.opened .envelope-front {
@@ -125,17 +166,25 @@ export default function RSVPPage() {
           height: 200px;
           transform-origin: top center;
           transform: translateX(-50%) rotateX(0deg);
-          transition: transform 0.6s ease-in-out 0s;
           z-index: 4;
           transform-style: preserve-3d;
+          transition: transform 0.8s cubic-bezier(0.33, 1, 0.68, 1) 0s;
         }
 
         .envelope-flap-inner {
           width: 100%;
           height: 100%;
-          background: linear-gradient(180deg, #2F462B 0%, #3A5635 100%);
+          background: linear-gradient(
+            145deg,
+            #4a6b44 0%,
+            #3d5a38 40%,
+            #355032 70%,
+            #2d4629 100%
+          );
           clip-path: polygon(50% 100%, 0 0, 100% 0);
           box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+          position: relative;
+          z-index: 0;
         }
 
         .envelope-container.opened .envelope-flap {
@@ -149,113 +198,91 @@ export default function RSVPPage() {
           left: 50%;
           transform: translateX(-50%) translateY(0);
           width: calc(100% - 40px);
-          background: #FAF8F5;
+          background: #FFFFFF;
           border-radius: 8px;
           box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
           z-index: 2;
-          transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.4s,
-                      opacity 0.3s ease 1.3s;
           overflow: hidden;
           opacity: 0;
           pointer-events: none;
+          transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s,
+                      opacity 0.4s ease-out 0.45s;
         }
 
         .envelope-container.opened .envelope-letter {
           transform: translateX(-50%) translateY(-100px);
+          opacity: 0;
+          pointer-events: none;
+          transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s,
+                      opacity 0.4s ease-out;
+        }
+
+        .envelope-container.opened .envelope-letter.letter-ready {
           opacity: 1;
           pointer-events: auto;
         }
 
         .letter-content {
           padding: 20px;
+          color-scheme: light;
+          height: 100%;
         }
 
         .wax-seal {
           position: absolute;
-          top: 155px;
+          top: 315px;
           left: 50%;
-          transform: translateX(-50%) rotateX(0deg);
-          z-index: 5;
+          transform: translateX(-50%);
+          z-index: 10;
           width: 100px;
           height: 95px;
-          border-radius: 47% 53% 52% 48% / 48% 46% 54% 52%;
-          background: 
-            radial-gradient(ellipse 120% 80% at 25% 20%, rgba(255, 255, 255, 0.4) 0%, transparent 50%),
-            radial-gradient(ellipse 80% 60% at 70% 75%, rgba(0, 0, 0, 0.15) 0%, transparent 50%),
-            radial-gradient(circle at 30% 30%, #FAF8F5 0%, #E8E0D4 30%, #DCD0BF 60%, #D0C4B0 100%);
-          box-shadow: 
-            0 4px 15px rgba(58, 86, 53, 0.4),
-            0 2px 6px rgba(0, 0, 0, 0.2),
-            inset 0 3px 6px rgba(255, 255, 255, 0.5),
-            inset 0 -3px 6px rgba(0, 0, 0, 0.15),
-            inset 2px 0 4px rgba(0, 0, 0, 0.05),
-            inset -2px 0 4px rgba(0, 0, 0, 0.05);
+          padding: 0;
           border: none;
+          background: none;
+          box-shadow: none;
           cursor: pointer;
-          transition: transform 0.6s ease-in-out;
-          animation: sealPulse 2s ease-in-out infinite;
           display: flex;
           align-items: center;
           justify-content: center;
+          transition: transform 0.6s ease-in-out, opacity 0.35s ease-out;
+        }
+
+        .wax-seal-opening {
+          opacity: 0;
+          pointer-events: none;
+        }
+
+        .wax-seal:hover:not(.wax-seal-opening) {
+          animation: sealWiggle 0.4s ease-in-out infinite;
         }
 
         .wax-seal:active {
-          transform: translateX(-50%) rotateX(0deg) scale(0.95);
+          transform: translateX(-50%) scale(0.95);
+          animation: none;
         }
 
-        .envelope-container:has(.wax-seal:hover) .envelope-flap {
-          transform: translateX(-50%) rotateX(35deg);
+        @keyframes sealWiggle {
+          0%, 100% { transform: translateX(-50%) rotate(-4deg); }
+          50% { transform: translateX(-50%) rotate(4deg); }
         }
 
-        .envelope-container:has(.wax-seal:hover) .wax-seal {
-          transform: translateX(-50%) rotateX(-35deg);
-        }
-
-        @keyframes sealPulse {
-          0%, 100% {
-            box-shadow: 
-              0 4px 15px rgba(58, 86, 53, 0.4),
-              0 2px 6px rgba(0, 0, 0, 0.2),
-              inset 0 3px 6px rgba(255, 255, 255, 0.5),
-              inset 0 -3px 6px rgba(0, 0, 0, 0.15),
-              inset 2px 0 4px rgba(0, 0, 0, 0.05),
-              inset -2px 0 4px rgba(0, 0, 0, 0.05);
-          }
-          50% {
-            box-shadow: 
-              0 4px 25px rgba(58, 86, 53, 0.6),
-              0 0 20px rgba(58, 86, 53, 0.3),
-              0 2px 6px rgba(0, 0, 0, 0.2),
-              inset 0 3px 6px rgba(255, 255, 255, 0.5),
-              inset 0 -3px 6px rgba(0, 0, 0, 0.15),
-              inset 2px 0 4px rgba(0, 0, 0, 0.05),
-              inset -2px 0 4px rgba(0, 0, 0, 0.05);
-          }
-        }
-
-        .wax-seal-inner {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 70px;
-          height: 70px;
-          border-radius: 50%;
-          background: radial-gradient(circle, rgba(0, 0, 0, 0.08) 0%, transparent 70%);
-          box-shadow: 
-            inset 0 2px 4px rgba(0, 0, 0, 0.15),
-            inset 0 -1px 2px rgba(255, 255, 255, 0.3);
+        .wax-seal-img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          display: block;
+          position: absolute;
+          inset: 0;
+          box-shadow: none;
         }
 
         .wax-seal-text {
-          color: #B8A890;
-          font-family: var(--font-paradise-seashore), serif;
-          font-size: 28px;
-          letter-spacing: 3px;
+          position: relative;
+          z-index: 1;
+          font-size: 18px;
           font-weight: 600;
-          text-shadow: 
-            0 -1px 1px rgba(0, 0, 0, 0.25),
-            0 1px 1px rgba(255, 255, 255, 0.4),
-            0 -2px 2px rgba(0, 0, 0, 0.1);
+          color: #FFFCF6;
+          text-shadow: 0 0px 4px rgba(217, 186, 148, 1.00);
         }
 
         /* Mobile adjustments */
@@ -286,18 +313,13 @@ export default function RSVPPage() {
           }
 
           .wax-seal {
-            top: 120px;
+            top: 240px;
             width: 85px;
             height: 80px;
           }
 
-          .wax-seal-inner {
-            width: 58px;
-            height: 58px;
-          }
-
           .wax-seal-text {
-            font-size: 22px;
+            font-size: 20px;
           }
 
           .letter-content {
