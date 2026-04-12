@@ -33,7 +33,7 @@ export default function Home() {
 
       {/* We're Getting Married Repeating Banner */}
       <div className="repeat-banner">
-        <div className="flex justify-around w-full px-4" style={{ gap: '18px' }}>
+        <div className="flex w-full max-w-full justify-center gap-6 px-4 sm:gap-8 md:justify-around md:gap-[18px]">
           <span className="repeat-text">WE&apos;RE GETTING MARRIED</span>
           <span className="repeat-text">WE&apos;RE GETTING MARRIED</span>
           <span className="repeat-text hidden sm:inline">WE&apos;RE GETTING MARRIED</span>
