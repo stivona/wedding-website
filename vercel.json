@@ -1,12 +1,13 @@
 {
   "redirects": [
     {
-      "source": "/admin",
-      "destination": "https://ribbon-month-841.notion.site/Admin-3371286404948050a2cecf82e5c554ad",
-      "permanent": false
-    },
-    {
-      "source": "/admin/",
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "admin.shannonandaustin.com"
+        }
+      ],
       "destination": "https://ribbon-month-841.notion.site/Admin-3371286404948050a2cecf82e5c554ad",
       "permanent": false
     }
