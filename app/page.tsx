@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="relative">
+    <div className="relative mb-20">
       {/* Hero Section */}
       <section className="min-h-[90vh] flex items-center justify-center">
         <div className="container-wedding text-center">

@@ -16,7 +16,7 @@ export default function RSVPPage() {
   }, [isOpen]);
 
   return (
-    <div className="py-16 md:py-24">
+    <div className="py-16 md:py-24 mb-20">
       <div className="container-wedding">
         {/* Header */}
         <div className="text-center mb-12">

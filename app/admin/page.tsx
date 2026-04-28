@@ -10,13 +10,13 @@ export const metadata: Metadata = {
 
 export default function AdminPage() {
   return (
-    <div className="w-full max-w-6xl mx-auto px-4 py-8">
+    <div className="w-full">
       <iframe
         src={NOTION_EMBED_SRC}
         title="Wedding admin"
         width="100%"
         height={600}
-        className="w-full border-0"
+        className="block w-full border-0"
         allowFullScreen
       />
     </div>

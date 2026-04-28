@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="bg-olive/5 border-t border-olive/10 py-12 mt-20">
+    <footer className="bg-olive/5 border-t border-olive/10 py-12">
       <div className="container-wedding text-center">
         {/* Date display in Libre Caslon Display */}
         <div 
