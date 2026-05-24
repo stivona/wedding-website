@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 
 const ZOLA_REGISTRY_URL =
-  "https://www.zola.com/registry/shannonandaustinaugust8/?preview=true";
+  "https://www.zola.com/registry/shannonandaustinaugust8/";
 const ZOLA_REGISTRY_KEY = "shannonandaustinaugust8";
 
 export const metadata: Metadata = {
