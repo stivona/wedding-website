@@ -10,7 +10,7 @@ const navItems = [
 ];
 
 const actionItems = [
-  { href: "https://withjoy.com/shannonandaustingetmarried/registry", label: "Registry", external: true },
+  { href: "/registry", label: "Registry", external: false },
   { href: "/rsvp", label: "RSVP", external: false },
 ];
 
