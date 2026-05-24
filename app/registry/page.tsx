@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Script from "next/script";
+import ZolaRegistryEmbed from "@/components/ZolaRegistryEmbed";
 
 const ZOLA_REGISTRY_URL =
   "https://www.zola.com/registry/shannonandaustinaugust8/";
@@ -26,22 +26,11 @@ export default function RegistryPage() {
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto min-h-[480px]">
-          <a
-            className="zola-registry-embed"
-            href={ZOLA_REGISTRY_URL}
-            data-registry-key={ZOLA_REGISTRY_KEY}
-          >
-            Our Zola Wedding Registry
-          </a>
-        </div>
+        <ZolaRegistryEmbed
+          href={ZOLA_REGISTRY_URL}
+          registryKey={ZOLA_REGISTRY_KEY}
+        />
       </div>
-
-      <Script
-        id="zola-wjs"
-        src="https://widget.zola.com/js/widget.js"
-        strategy="afterInteractive"
-      />
     </div>
   );
 }
