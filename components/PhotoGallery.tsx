@@ -427,10 +427,6 @@ export default function PhotoGallery() {
                 Back
               </button>
 
-              <p className="font-body text-olive/60 text-sm">
-                {activeIndex + 1} / {photos.length}
-              </p>
-
               <a
                 href={activePhoto.downloadUrl}
                 className="p-2 border border-olive text-olive rounded-full bg-cream/90 hover:bg-olive hover:text-cream transition-colors duration-200"
