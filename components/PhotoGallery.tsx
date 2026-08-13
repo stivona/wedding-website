@@ -11,15 +11,46 @@ type Photo = {
   downloadUrl: string;
 };
 
-function formatFileSize(bytes: number) {
-  if (bytes < 1024 * 1024) {
-    return `${Math.max(1, Math.round(bytes / 1024))} KB`;
-  }
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+function photoFilename(pathname: string) {
+  return pathname.split("/").pop() ?? "Wedding photo";
 }
 
-function photoFilename(pathname: string) {
-  return pathname.split("/").pop() ?? "photo";
+function RefreshIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+      />
+    </svg>
+  );
+}
+
+function DownloadIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+      />
+    </svg>
+  );
 }
 
 export default function PhotoGallery() {
@@ -126,9 +157,6 @@ export default function PhotoGallery() {
         onDrop={handleDrop}
       >
         <div className="text-center">
-          <p className="font-body text-olive/80 mb-2">
-            Share your favorite moments from our wedding weekend.
-          </p>
           <p className="font-body text-olive/60 text-sm mb-6">
             JPG, PNG, WebP, GIF, or HEIC up to 15 MB each.
           </p>
@@ -176,10 +204,11 @@ export default function PhotoGallery() {
           <button
             type="button"
             onClick={() => void loadPhotos()}
-            className="link-nav"
+            className="p-2 text-olive hover:text-olive-400 transition-colors duration-200 disabled:opacity-50"
             disabled={isLoading}
+            aria-label="Refresh gallery"
           >
-            Refresh
+            <RefreshIcon className="w-5 h-5" />
           </button>
         </div>
 
@@ -211,21 +240,14 @@ export default function PhotoGallery() {
                     loading="lazy"
                   />
                 </a>
-                <div className="p-4 flex items-center justify-between gap-3">
-                  <div className="min-w-0">
-                    <p className="font-body text-olive/70 text-xs truncate">
-                      {photoFilename(photo.pathname)}
-                    </p>
-                    <p className="font-body text-olive/50 text-xs">
-                      {formatFileSize(photo.size)}
-                    </p>
-                  </div>
+                <div className="p-3 flex justify-end">
                   <a
                     href={photo.downloadUrl}
-                    className="shrink-0 px-3 py-1.5 border border-olive text-olive font-body text-xs uppercase tracking-widest rounded-full hover:bg-olive hover:text-cream transition-colors duration-200"
+                    className="p-2 border border-olive text-olive rounded-full hover:bg-olive hover:text-cream transition-colors duration-200"
                     download
+                    aria-label="Download photo"
                   >
-                    Download
+                    <DownloadIcon className="w-4 h-4" />
                   </a>
                 </div>
               </article>
