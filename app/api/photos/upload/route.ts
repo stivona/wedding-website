@@ -19,7 +19,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     const jsonResponse = await handleUpload({
       body,
       request,
-      onBeforeGenerateToken: async (pathname) => {
+      onBeforeGenerateToken: async (pathname, _clientPayload, _multipart) => {
         if (!pathname.startsWith("photos/")) {
           throw new Error("Invalid upload path.");
         }
@@ -29,9 +29,6 @@ export async function POST(request: Request): Promise<NextResponse> {
           maximumSizeInBytes: MAX_FILE_SIZE_BYTES,
           addRandomSuffix: true,
         };
-      },
-      onUploadCompleted: async ({ blob }) => {
-        console.log("Photo uploaded:", blob.pathname);
       },
     });
 

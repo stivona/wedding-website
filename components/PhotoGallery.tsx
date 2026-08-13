@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { upload } from "@vercel/blob/client";
+import { uploadPhoto } from "@/lib/uploadPhoto";
 
 type Photo = {
   url: string;
@@ -77,10 +77,7 @@ export default function PhotoGallery() {
         const file = fileArray[index];
         setUploadProgress(`Uploading ${index + 1} of ${fileArray.length}...`);
 
-        await upload(`photos/${file.name}`, file, {
-          access: "public",
-          handleUploadUrl: "/api/photos/upload",
-        });
+        await uploadPhoto(file);
       }
 
       await loadPhotos();
