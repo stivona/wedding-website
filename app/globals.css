@@ -3,10 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --site-header-height: 4.5rem;
-  }
-
   html {
     scroll-behavior: smooth;
   }

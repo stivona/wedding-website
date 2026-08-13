@@ -106,6 +106,7 @@ export default function PhotoGallery() {
   const [error, setError] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [headerHeight, setHeaderHeight] = useState(0);
 
   const closeLightbox = useCallback(() => {
     setActiveIndex(null);
@@ -160,6 +161,28 @@ export default function PhotoGallery() {
   useEffect(() => {
     loadPhotos();
   }, [loadPhotos]);
+
+  useEffect(() => {
+    const header = document.getElementById("site-header");
+    if (!header) {
+      return;
+    }
+
+    const updateHeaderHeight = () => {
+      setHeaderHeight(header.offsetHeight);
+    };
+
+    updateHeaderHeight();
+
+    const observer = new ResizeObserver(updateHeaderHeight);
+    observer.observe(header);
+    window.addEventListener("resize", updateHeaderHeight);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", updateHeaderHeight);
+    };
+  }, []);
 
   useEffect(() => {
     if (activeIndex === null) {
@@ -363,12 +386,13 @@ export default function PhotoGallery() {
 
       {activePhoto && activeIndex !== null && (
         <div
-          className="fixed inset-x-0 bottom-0 z-40 bg-cream/95 backdrop-blur-sm flex flex-col top-[var(--site-header-height)]"
+          className="fixed inset-x-0 bottom-0 z-40 bg-cream/95 backdrop-blur-sm flex flex-col"
+          style={headerHeight > 0 ? { top: headerHeight } : { top: "4rem" }}
           role="dialog"
           aria-modal="true"
           aria-label="Photo viewer"
         >
-          <div className="flex items-center justify-between gap-4 p-4 md:p-6">
+          <div className="flex items-center justify-between gap-4 px-4 py-2 md:px-6 md:py-3">
             <button
               type="button"
               onClick={closeLightbox}
@@ -392,12 +416,12 @@ export default function PhotoGallery() {
             </a>
           </div>
 
-          <div className="flex-1 flex items-center justify-center relative px-4 pb-6 md:px-16 md:pb-10 min-h-0">
+          <div className="relative flex-1 min-h-0 w-full flex items-center justify-center px-12 py-4 md:px-20">
             {photos.length > 1 && (
               <button
                 type="button"
                 onClick={showPreviousPhoto}
-                className="absolute left-2 md:left-6 p-3 border border-olive text-olive rounded-full bg-cream/80 hover:bg-olive hover:text-cream transition-colors duration-200"
+                className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 p-3 border border-olive text-olive rounded-full bg-cream/80 hover:bg-olive hover:text-cream transition-colors duration-200 z-10"
                 aria-label="Previous photo"
               >
                 <ChevronIcon className="w-6 h-6" direction="left" />
@@ -408,14 +432,14 @@ export default function PhotoGallery() {
             <img
               src={activePhoto.url}
               alt={photoFilename(activePhoto.pathname)}
-              className="max-h-[calc(100vh-var(--site-header-height)-8rem)] max-w-full object-contain rounded-lg shadow-lg"
+              className="block max-h-full max-w-full w-auto h-auto object-contain rounded-lg shadow-lg mx-auto"
             />
 
             {photos.length > 1 && (
               <button
                 type="button"
                 onClick={showNextPhoto}
-                className="absolute right-2 md:right-6 p-3 border border-olive text-olive rounded-full bg-cream/80 hover:bg-olive hover:text-cream transition-colors duration-200"
+                className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 p-3 border border-olive text-olive rounded-full bg-cream/80 hover:bg-olive hover:text-cream transition-colors duration-200 z-10"
                 aria-label="Next photo"
               >
                 <ChevronIcon className="w-6 h-6" direction="right" />

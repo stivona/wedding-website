@@ -19,7 +19,10 @@ export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-cream/95 backdrop-blur-sm border-b border-olive/10">
+    <header
+      id="site-header"
+      className="sticky top-0 z-50 bg-cream/95 backdrop-blur-sm border-b border-olive/10"
+    >
       <nav className="container-wedding py-4">
         <div className="flex items-center justify-between">
           {/* Logo/Names */}
