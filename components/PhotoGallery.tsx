@@ -1,7 +1,13 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { uploadPhoto } from "@/lib/uploadPhoto";
+
+function measureHeaderBottom() {
+  const header = document.getElementById("site-header");
+  return header ? Math.round(header.getBoundingClientRect().bottom) : 0;
+}
 
 type Photo = {
   url: string;
@@ -106,7 +112,8 @@ export default function PhotoGallery() {
   const [error, setError] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [headerHeight, setHeaderHeight] = useState(0);
+  const [lightboxTop, setLightboxTop] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
 
   const closeLightbox = useCallback(() => {
     setActiveIndex(null);
@@ -131,6 +138,7 @@ export default function PhotoGallery() {
   }, [photos.length]);
 
   const openLightbox = (index: number) => {
+    setLightboxTop(measureHeaderBottom());
     setActiveIndex(index);
   };
 
@@ -163,25 +171,7 @@ export default function PhotoGallery() {
   }, [loadPhotos]);
 
   useEffect(() => {
-    const header = document.getElementById("site-header");
-    if (!header) {
-      return;
-    }
-
-    const updateHeaderHeight = () => {
-      setHeaderHeight(header.offsetHeight);
-    };
-
-    updateHeaderHeight();
-
-    const observer = new ResizeObserver(updateHeaderHeight);
-    observer.observe(header);
-    window.addEventListener("resize", updateHeaderHeight);
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("resize", updateHeaderHeight);
-    };
+    setIsMounted(true);
   }, []);
 
   useEffect(() => {
@@ -194,8 +184,23 @@ export default function PhotoGallery() {
       return;
     }
 
+    const updateLightboxTop = () => {
+      setLightboxTop(measureHeaderBottom());
+    };
+
+    updateLightboxTop();
+
+    const header = document.getElementById("site-header");
+    const observer = header ? new ResizeObserver(updateLightboxTop) : null;
+    if (header && observer) {
+      observer.observe(header);
+    }
+    window.addEventListener("resize", updateLightboxTop);
+
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+
+    requestAnimationFrame(updateLightboxTop);
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -211,9 +216,17 @@ export default function PhotoGallery() {
 
     return () => {
       document.body.style.overflow = previousOverflow;
+      observer?.disconnect();
+      window.removeEventListener("resize", updateLightboxTop);
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [activeIndex, photos.length, closeLightbox, showPreviousPhoto, showNextPhoto]);
+  }, [
+    activeIndex,
+    photos.length,
+    closeLightbox,
+    showPreviousPhoto,
+    showNextPhoto,
+  ]);
 
   const activePhoto = activeIndex !== null ? photos[activeIndex] : null;
 
@@ -384,70 +397,73 @@ export default function PhotoGallery() {
         )}
       </div>
 
-      {activePhoto && activeIndex !== null && (
-        <div
-          className="fixed inset-x-0 bottom-0 z-40 bg-cream/95 backdrop-blur-sm flex flex-col"
-          style={headerHeight > 0 ? { top: headerHeight } : { top: "4rem" }}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Photo viewer"
-        >
-          <div className="flex items-center justify-between gap-4 px-4 py-2 md:px-6 md:py-3">
-            <button
-              type="button"
-              onClick={closeLightbox}
-              className="inline-flex items-center gap-2 px-4 py-2 border border-olive text-olive font-body text-sm uppercase tracking-widest rounded-full hover:bg-olive hover:text-cream transition-colors duration-200"
-            >
-              <BackIcon className="w-4 h-4" />
-              Back
-            </button>
+      {isMounted &&
+        activePhoto &&
+        activeIndex !== null &&
+        createPortal(
+          <div
+            className="fixed inset-x-0 bottom-0 z-40 bg-cream/95 backdrop-blur-sm"
+            style={{ top: lightboxTop > 0 ? lightboxTop : undefined }}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Photo viewer"
+          >
+            <div className="absolute inset-0 flex items-center justify-center px-14 md:px-24">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={activePhoto.url}
+                alt={photoFilename(activePhoto.pathname)}
+                className="max-h-full max-w-full object-contain rounded-lg shadow-lg"
+              />
+            </div>
 
-            <p className="font-body text-olive/60 text-sm">
-              {activeIndex + 1} / {photos.length}
-            </p>
-
-            <a
-              href={activePhoto.downloadUrl}
-              className="p-2 border border-olive text-olive rounded-full hover:bg-olive hover:text-cream transition-colors duration-200"
-              download
-              aria-label="Download photo"
-            >
-              <DownloadIcon className="w-5 h-5" />
-            </a>
-          </div>
-
-          <div className="relative flex-1 min-h-0 w-full flex items-center justify-center px-12 py-4 md:px-20">
-            {photos.length > 1 && (
+            <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-between gap-4 px-4 py-2 md:px-6 md:py-3">
               <button
                 type="button"
-                onClick={showPreviousPhoto}
-                className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 p-3 border border-olive text-olive rounded-full bg-cream/80 hover:bg-olive hover:text-cream transition-colors duration-200 z-10"
-                aria-label="Previous photo"
+                onClick={closeLightbox}
+                className="inline-flex items-center gap-2 px-4 py-2 border border-olive text-olive font-body text-sm uppercase tracking-widest rounded-full bg-cream/90 hover:bg-olive hover:text-cream transition-colors duration-200"
               >
-                <ChevronIcon className="w-6 h-6" direction="left" />
+                <BackIcon className="w-4 h-4" />
+                Back
               </button>
-            )}
 
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={activePhoto.url}
-              alt={photoFilename(activePhoto.pathname)}
-              className="block max-h-full max-w-full w-auto h-auto object-contain rounded-lg shadow-lg mx-auto"
-            />
+              <p className="font-body text-olive/60 text-sm">
+                {activeIndex + 1} / {photos.length}
+              </p>
+
+              <a
+                href={activePhoto.downloadUrl}
+                className="p-2 border border-olive text-olive rounded-full bg-cream/90 hover:bg-olive hover:text-cream transition-colors duration-200"
+                download
+                aria-label="Download photo"
+              >
+                <DownloadIcon className="w-5 h-5" />
+              </a>
+            </div>
 
             {photos.length > 1 && (
-              <button
-                type="button"
-                onClick={showNextPhoto}
-                className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 p-3 border border-olive text-olive rounded-full bg-cream/80 hover:bg-olive hover:text-cream transition-colors duration-200 z-10"
-                aria-label="Next photo"
-              >
-                <ChevronIcon className="w-6 h-6" direction="right" />
-              </button>
+              <>
+                <button
+                  type="button"
+                  onClick={showPreviousPhoto}
+                  className="absolute left-2 md:left-4 top-1/2 z-10 -translate-y-1/2 p-3 border border-olive text-olive rounded-full bg-cream/90 hover:bg-olive hover:text-cream transition-colors duration-200"
+                  aria-label="Previous photo"
+                >
+                  <ChevronIcon className="w-6 h-6" direction="left" />
+                </button>
+                <button
+                  type="button"
+                  onClick={showNextPhoto}
+                  className="absolute right-2 md:right-4 top-1/2 z-10 -translate-y-1/2 p-3 border border-olive text-olive rounded-full bg-cream/90 hover:bg-olive hover:text-cream transition-colors duration-200"
+                  aria-label="Next photo"
+                >
+                  <ChevronIcon className="w-6 h-6" direction="right" />
+                </button>
+              </>
             )}
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body
+        )}
     </div>
   );
 }
