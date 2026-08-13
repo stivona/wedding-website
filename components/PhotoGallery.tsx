@@ -225,7 +225,10 @@ export default function PhotoGallery() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {photos.map((photo) => (
-              <article key={photo.pathname} className="card p-0 overflow-hidden">
+              <article
+                key={photo.pathname}
+                className="card p-0 overflow-hidden relative group"
+              >
                 <a
                   href={photo.url}
                   target="_blank"
@@ -240,16 +243,15 @@ export default function PhotoGallery() {
                     loading="lazy"
                   />
                 </a>
-                <div className="p-3 flex justify-end">
-                  <a
-                    href={photo.downloadUrl}
-                    className="p-2 border border-olive text-olive rounded-full hover:bg-olive hover:text-cream transition-colors duration-200"
-                    download
-                    aria-label="Download photo"
-                  >
-                    <DownloadIcon className="w-4 h-4" />
-                  </a>
-                </div>
+                <a
+                  href={photo.downloadUrl}
+                  className="absolute top-3 right-3 p-2 bg-cream/90 border border-olive text-olive rounded-full opacity-0 group-hover:opacity-100 hover:bg-olive hover:text-cream transition-all duration-200 focus:opacity-100"
+                  download
+                  aria-label="Download photo"
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  <DownloadIcon className="w-4 h-4" />
+                </a>
               </article>
             ))}
           </div>

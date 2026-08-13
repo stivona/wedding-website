@@ -1,5 +1,6 @@
 import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
 import { NextResponse } from "next/server";
+import { getBlobReadWriteToken } from "@/lib/blobToken";
 
 const ALLOWED_CONTENT_TYPES = [
   "image/jpeg",
@@ -17,6 +18,7 @@ export async function POST(request: Request): Promise<NextResponse> {
 
   try {
     const jsonResponse = await handleUpload({
+      token: getBlobReadWriteToken(),
       body,
       request,
       onBeforeGenerateToken: async (pathname, _clientPayload, _multipart) => {

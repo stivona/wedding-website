@@ -1,5 +1,6 @@
 import { list } from "@vercel/blob";
 import { NextResponse } from "next/server";
+import { getBlobReadWriteToken } from "@/lib/blobToken";
 
 export const dynamic = "force-dynamic";
 
@@ -13,6 +14,7 @@ export async function GET() {
         prefix: "photos/",
         limit: 1000,
         cursor,
+        token: getBlobReadWriteToken(),
       });
 
       photos.push(...result.blobs);

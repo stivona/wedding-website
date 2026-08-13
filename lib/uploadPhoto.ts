@@ -1,3 +1,5 @@
+import { sanitizeBlobClientToken } from "@/lib/blobToken";
+
 const BLOB_API_URL = "https://vercel.com/api/blob";
 const BLOB_API_VERSION = "12";
 
@@ -48,10 +50,12 @@ export async function uploadPhoto(file: File) {
     throw new Error(tokenData.error ?? "Failed to prepare upload.");
   }
 
+  const clientToken = sanitizeBlobClientToken(tokenData.clientToken);
+
   const uploadUrl = `${BLOB_API_URL}/?${new URLSearchParams({ pathname })}`;
   const headers: Record<string, string> = {
-    authorization: `Bearer ${tokenData.clientToken}`,
-    "x-vercel-blob-store-id": getStoreIdFromClientToken(tokenData.clientToken),
+    authorization: `Bearer ${clientToken}`,
+    "x-vercel-blob-store-id": getStoreIdFromClientToken(clientToken),
     "x-api-version": BLOB_API_VERSION,
     "x-content-length": String(file.size),
     "x-vercel-blob-access": "public",
