@@ -363,7 +363,7 @@ export default function PhotoGallery() {
 
       {activePhoto && activeIndex !== null && (
         <div
-          className="fixed inset-0 z-50 bg-cream/95 backdrop-blur-sm flex flex-col"
+          className="fixed inset-x-0 bottom-0 z-40 bg-cream/95 backdrop-blur-sm flex flex-col top-[var(--site-header-height)]"
           role="dialog"
           aria-modal="true"
           aria-label="Photo viewer"
@@ -408,7 +408,7 @@ export default function PhotoGallery() {
             <img
               src={activePhoto.url}
               alt={photoFilename(activePhoto.pathname)}
-              className="max-h-[calc(100vh-8rem)] max-w-full object-contain rounded-lg shadow-lg"
+              className="max-h-[calc(100vh-var(--site-header-height)-8rem)] max-w-full object-contain rounded-lg shadow-lg"
             />
 
             {photos.length > 1 && (
